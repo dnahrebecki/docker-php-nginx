@@ -1,4 +1,5 @@
 FROM nginx:stable
 
 RUN rm /etc/nginx/conf.d/default.conf
-ADD ./default.conf /etc/nginx/conf.d/       # for symfony applications
+COPY ./oro-commerce.conf /etc/nginx/conf.d/default.conf
+WORKDIR /usr/share/nginx/html
