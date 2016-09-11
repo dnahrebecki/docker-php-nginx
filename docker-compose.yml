@@ -1,0 +1,30 @@
+version: '2'
+services:
+  nginx:
+    build: ./nginx/
+    volumes:
+      - "./:/usr/share/nginx/html"
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - php
+      - mysql
+    environment:
+      XDEBUG_CONFIG: remote_host=172.18.0.1   # @todo find a more flexible way
+  php:
+    build: ./php/5_6                          # version of php
+    volumes:
+        - "./:/usr/share/nginx/html"
+    restart: always
+    environment:
+      XDEBUG_CONFIG: remote_host=172.18.0.1   # @todo find a more flexible way
+  mysql:
+    image: mysql:5.7.13
+    volumes:
+      - "./build/mysql/data:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: db_name
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_password
